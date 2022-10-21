@@ -64,9 +64,24 @@ const sliderItems = document.getElementsByClassName("item");
 const thumbItems = document.getElementsByClassName("thumb");
 let activeItem = 0;
 addActive();
-
-// Negazione in avanti
+// Negazione in avanti con intervallo
 const nextBtn = document.querySelector(".next");
+const intervalImages = setInterval(function() {
+    // Rimuovo classe active dall'immagine corrente
+    removeActive();
+    // Vado avanti fino a quando c'è l'immagine successiva
+    if(activeItem < sliderItems.length - 1) {
+        // Incremento slider
+        activeItem++;
+    } else {
+        // Altrimenti vado all'immagine iniziale e ricomincio
+        activeItem = 0;
+    }
+    // Aggiungo classe active dall'immagine corrente
+    addActive();
+}, 3000);
+ 
+// Negazione in avanti normale
 nextBtn.addEventListener("click", function() {
     // Rimuovo classe active dall'immagine corrente
     removeActive();
@@ -81,6 +96,7 @@ nextBtn.addEventListener("click", function() {
     // Aggiungo classe active dall'immagine corrente
     addActive();
 });
+
 
 // Navigazione indietro 
 const prevBtn = document.querySelector(".prev");
@@ -98,6 +114,20 @@ prevBtn.addEventListener("click", function() {
     // Aggiungo classe active dall'immagine corrente
     addActive();
 });
+
+// Al click sull'immagine del thumb cambio immagine 
+for(let i = 0; i < thumbItems.length; i++) {
+    const thisThumb = thumbItems[i];
+    thisThumb.addEventListener("click", function(){
+        // Rimuovo class active
+        removeActive();
+        // Prendo l'indice dell'immagine cliccata e lo salvo in activeItem
+        activeItem = i;
+        // Aggiungo class active all'immagine cliccata
+        addActive();
+    });
+}
+
 /*                             FUNZIONI                         */
 /**
  * Description: funzione che toglie active all'immagine 
